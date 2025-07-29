@@ -5,7 +5,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -25,6 +28,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           textTheme: GoogleFonts.kanitTextTheme(), // ใส่ฟอนต์ Kanit ทั้งแอป
+          platform: TargetPlatform.android,
+          useMaterial3: true,
         ),
         home: const HomePage(), //หน้าหลักของแอป
         localizationsDelegates: const [
