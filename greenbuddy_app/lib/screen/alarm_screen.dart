@@ -1,37 +1,52 @@
+// lib/screen/alarm_screen.dart
+
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:app/structure/background_container.dart';
 import 'package:app/screen/sugges2_screen.dart';
+import 'package:app/screen/edit_alarm_screen.dart';  // <-- import ไฟล์ใหม่ที่มี EditAlarmScreen
 
-// หน้าจอให้ตั้งค่าเวลาแจ้งเตือน
+/// โมเดลเก็บข้อมูลแจ้งเตือน
+class Alarm {
+  TimeOfDay time;
+  String label;
+  bool enabled;
+  bool soundOn;
+  bool snoozeOn;
+
+  Alarm({
+    required this.time,
+    this.label = 'Alarm everyday',
+    this.enabled = true,
+    this.soundOn = true,
+    this.snoozeOn = false,
+  });
+}
+
+/// หน้ารายการแจ้งเตือน (Alarm List)
 class AlarmScreen extends StatefulWidget {
-  final Color plantColor; // สีธีมของหน้า
+  final Color plantColor;
 
-  const AlarmScreen({super.key, required this.plantColor});
+  const AlarmScreen({Key? key, required this.plantColor}) : super(key: key);
 
   @override
   State<AlarmScreen> createState() => _AlarmScreenState();
 }
 
 class _AlarmScreenState extends State<AlarmScreen> {
-  @override
-  void initState() {
-    super.initState();
-    // เรียกหลังจากวาด UI เสร็จเพื่ออัปเดตสถานะ (ถ้ายังเมาท์ติดอยู่)
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        setState(() {});
-      }
-    });
-  }
+  final List<Alarm> alarms = [
+    Alarm(time: const TimeOfDay(hour: 7, minute: 30), enabled: false),
+    Alarm(time: const TimeOfDay(hour: 18, minute: 0)),
+    Alarm(time: const TimeOfDay(hour: 9, minute: 0)),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return BackgroundContainer(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        // ส่วนหัวของหน้าจอ (AppBar)
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(280),
+          preferredSize: const Size.fromHeight(200),
           child: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -50,7 +65,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
             ),
             child: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: Row(
                   children: [
                     // ปุ่มย้อนกลับ
@@ -59,20 +74,16 @@ class _AlarmScreenState extends State<AlarmScreen> {
                         color: Colors.white.withOpacity(0.25),
                         borderRadius: BorderRadius.circular(18),
                       ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(18),
-                          onTap: () => Navigator.of(context).pop(),
-                          child: const SizedBox(
-                            width: 45,
-                            height: 45,
-                            child: Icon(Icons.arrow_back, color: Colors.white),
-                          ),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(18),
+                        onTap: () => Navigator.of(context).pop(),
+                        child: const SizedBox(
+                          width: 45,
+                          height: 45,
+                          child: Icon(Icons.arrow_back, color: Colors.white),
                         ),
                       ),
                     ),
-                    // ชื่อหน้า ตรงกลาง
                     const Expanded(
                       child: Text(
                         "ตั้งเวลาแจ้งเตือนแง้วๆ",
@@ -84,21 +95,49 @@ class _AlarmScreenState extends State<AlarmScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 45), // เว้นที่ด้านขวาเท่าไอคอน
+                    // ปุ่มเพิ่มแจ้งเตือน
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.25),
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(18),
+                        onTap: _onAddAlarm,
+                        child: const SizedBox(
+                          width: 45,
+                          height: 45,
+                          child: Icon(Icons.add, color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
           ),
         ),
-        // เนื้อหาหลักของหน้า
-        body: const Center(
-          child: Text(
-            "หน้าตั้งเวลาแจ้งเตือนแง้ว",
-            style: TextStyle(fontSize: 24),
-          ),
+        body: ListView.separated(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          itemCount: alarms.length,
+          separatorBuilder: (_, __) => const Divider(height: 1, indent: 16, endIndent: 16),
+          itemBuilder: (context, index) {
+            final alarm = alarms[index];
+            return ListTile(
+              leading: const Icon(Icons.access_time),
+              title: Text(
+                alarm.time.format(context),
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+              subtitle: Text(alarm.label),
+              trailing: Switch(
+                value: alarm.enabled,
+                onChanged: (on) => setState(() => alarm.enabled = on),
+              ),
+              onTap: () => _onEditAlarm(alarm, index),
+            );
+          },
         ),
-        // แถบเมนูด้านล่าง
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -108,6 +147,10 @@ class _AlarmScreenState extends State<AlarmScreen> {
                 Colors.teal.shade300,
               ],
             ),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
@@ -115,59 +158,57 @@ class _AlarmScreenState extends State<AlarmScreen> {
                 offset: const Offset(0, 2),
               ),
             ],
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
           ),
           child: BottomNavigationBar(
-            currentIndex: 2, // ตั้งค่าให้ไอคอน Alarm ถูกเลือก
-            onTap: (index) {
-              // กำหนดการทำงานเมื่อกดไอคอนแต่ละตัว
-              if (index == 0) {
-                // กลับไปหน้าโฮม
-                Navigator.pop(context);
-              } else if (index == 1) {
-                // ไปหน้าส่งคำแนะนำ
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => Suggest2Page()),
-                );
-              } else if (index == 2) {
-                // อยู่ในหน้าแจ้งเตือนแล้ว ไม่ต้องทำอะไร
-                return;
-              }
-            },
+            currentIndex: 2,
             backgroundColor: Colors.transparent,
+            elevation: 0,
             selectedItemColor: Colors.white,
             unselectedItemColor: Colors.white.withOpacity(0.6),
-            elevation: 0,
-            type: BottomNavigationBarType.fixed,
-            selectedLabelStyle: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-            ),
-            unselectedLabelStyle: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 12,
-            ),
+            onTap: (i) {
+              if (i == 0) Navigator.pop(context);
+              if (i == 1) Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => Suggest2Page()),
+              );
+            },
             items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_rounded, size: 28),
-                label: 'Home', // หน้าโฮม
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.chat_bubble_outline_rounded, size: 28),
-                label: 'Suggest', // คำแนะนำ
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.notifications_outlined, size: 28),
-                label: 'Alarm', // ตั้งค่าแจ้งเตือน
-              ),
+              BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(Icons.chat_bubble_outline_rounded), label: 'Suggest'),
+              BottomNavigationBarItem(icon: Icon(Icons.notifications_outlined), label: 'Alarm'),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _onAddAlarm() async {
+    final newAlarm = Alarm(time: TimeOfDay.now());
+    final created = await Navigator.push<Alarm?>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => EditAlarmScreen(
+          alarm: newAlarm,
+          plantColor: widget.plantColor,
+          isNew: true,
+        ),
+      ),
+    );
+    if (created != null) setState(() => alarms.add(created));
+  }
+
+  void _onEditAlarm(Alarm alarm, int index) async {
+    final updated = await Navigator.push<Alarm?>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => EditAlarmScreen(
+          alarm: alarm,
+          plantColor: widget.plantColor,
+        ),
+      ),
+    );
+    if (updated == null) setState(() => alarms.removeAt(index));
+    else setState(() => alarms[index] = updated);
   }
 }
