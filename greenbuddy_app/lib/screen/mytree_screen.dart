@@ -7,7 +7,7 @@ import 'package:app/structure/background_container.dart';
 class PlantPage extends StatefulWidget {
   final Plant plant;
 
-  const PlantPage({Key? key, required this.plant}) : super(key: key);
+  const PlantPage({super.key, required this.plant});
 
   @override
   _PlantPageState createState() => _PlantPageState();
@@ -161,7 +161,7 @@ class _PlantPageState extends State<PlantPage> with TickerProviderStateMixin {
                                   (route) => false,
                                 );
                               },
-                              child: Container(
+                              child: SizedBox(
                                 width: 45,
                                 height: 45,
                                 child: const Icon(
@@ -180,7 +180,7 @@ class _PlantPageState extends State<PlantPage> with TickerProviderStateMixin {
                       child: FadeTransition(
                         opacity: _fadeController,
                         child: Text(
-                          "${widget.plant.name}",
+                          widget.plant.name,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontSize: 22,

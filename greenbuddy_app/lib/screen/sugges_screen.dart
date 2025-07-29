@@ -5,7 +5,7 @@ import 'package:app/structure/background_container.dart';
 class SuggestPage extends StatelessWidget {
   final Plant transaction;
 
-  SuggestPage({Key? key, required this.transaction}) : super(key: key);
+  SuggestPage({super.key, required this.transaction});
 
   final Map<String, Map<String, String>> careInfo = {
     'พลูด่าง': {
@@ -166,7 +166,7 @@ class SuggestPage extends StatelessWidget {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(18),
                           onTap: () => Navigator.of(context).pop(),
-                          child: Container(
+                          child: SizedBox(
                             width: 45,
                             height: 45,
                             child: const Icon(
@@ -180,7 +180,7 @@ class SuggestPage extends StatelessWidget {
                     // Title
                     Expanded(
                       child: Text(
-                        "${transaction.type}",
+                        transaction.type,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 22,

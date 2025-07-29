@@ -5,6 +5,8 @@ import 'package:app/provider/plant_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:app/screen/addplantpage_screen.dart';
 import 'package:app/structure/background_container.dart';
+import 'package:app/screen/alarm_screen.dart';
+// Make sure that the AlarmScreen widget is defined in alarm_screen.dart and the import path is correct.
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -63,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             textAlign: TextAlign.center,
           ),
           actions: [
-            Container(
+            SizedBox(
               width: double.infinity,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -453,15 +455,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   MaterialPageRoute(builder: (context) => Suggest2Page()),
                 );
               } else if (index == 2) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: const Text('🔔 Coming Soon...'),
-                    backgroundColor: Colors.green.shade600,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                setState(() {}); // เพิ่ม setState เพื่อให้แน่ใจว่า UI จะ update
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AlarmScreen(
+                      key: UniqueKey(), // เพิ่ม unique key
+                      plantColor: Colors.green.shade400,
                     ),
                   ),
-                );
+                ).then((_) {
+                  // เมื่อกลับมาจากหน้า Alarm
+                  if (mounted) {
+                    setState(() {});
+                  }
+                });
               }
             },
             backgroundColor: Colors.transparent,

@@ -1,6 +1,7 @@
 import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:app/screen/alarm_screen.dart';
 
 class Suggest2Page extends StatelessWidget {
   final List<Map<String, String>> suggestions = [
@@ -35,6 +36,8 @@ class Suggest2Page extends StatelessWidget {
           'https://www.freebirdtour.com/17168980/%E0%B9%80%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%94%E0%B8%AD%E0%B8%81%E0%B9%86-%E0%B8%9A%E0%B8%AD%E0%B8%81%E0%B8%9F%E0%B8%A3%E0%B8%B5%E0%B9%80%E0%B8%9A%E0%B8%B4%E0%B8%A3%E0%B9%8C%E0%B8%94-10-%E0%B8%94%E0%B8%AD%E0%B8%81%E0%B9%84%E0%B8%A1%E0%B9%89%E0%B8%AA%E0%B8%B0%E0%B8%9E%E0%B8%A3%E0%B8%B1%E0%B9%88%E0%B8%87%E0%B8%9A%E0%B8%B2%E0%B8%99%E0%B9%83%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B9%81%E0%B8%94%E0%B8%99',
     },
   ];
+
+  Suggest2Page({super.key});
 
   void _openUrl(String url) async {
     try {
@@ -153,16 +156,15 @@ class Suggest2Page extends StatelessWidget {
                 (route) => false,
               );
             } else if (index == 2) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text('🔔 Coming Soon...'),
-                  backgroundColor: Colors.green.shade600,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                      Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AlarmScreen(
+                      plantColor: Colors.green.shade400,
+                    ),
                   ),
-                ),
-              );
-            }
+                );
+              }
           },
           backgroundColor: Colors.transparent,
           selectedItemColor: Colors.white,

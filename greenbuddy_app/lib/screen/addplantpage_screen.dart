@@ -373,7 +373,7 @@ class _AddPlantPageState extends State<AddPlantPage>
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: Container(
+                          child: SizedBox(
                             width: 45,
                             height: 45,
                             child: const Icon(
