@@ -6,7 +6,6 @@ A Flutter-based plant care management application that helps users monitor and t
 
 - [Features](#features)
 - [Screenshots](#screenshots)
-- [Demo Video](#demo-video)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
@@ -33,13 +32,6 @@ A Flutter-based plant care management application that helps users monitor and t
 
 ![GreenBuddy Interface](greenbuddy_app/assets/image.png)
 
-## Demo Video
-
-Watch GreenBuddy in action:
-
-[![GreenBuddy Demo](https://img.youtube.com/vi/oHkVxUplFMk/0.jpg)](https://youtu.be/oHkVxUplFMk?si=WueRoZ4eajSMAW_0)
-
-[Watch on YouTube](https://youtu.be/oHkVxUplFMk?si=WueRoZ4eajSMAW_0)
 
 ## Tech Stack
 
