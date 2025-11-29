@@ -1,96 +1,165 @@
-# โปรเจค GreenBuddy 🌱
+# GreenBuddy 🌱
 
-GreenBuddy เป็นแอปพลิเคชันสำหรับการดูแลต้นไม้ ที่ช่วยให้ผู้ใช้สามารถจัดการและติดตามการเจริญเติบโตของต้นไม้ได้อย่างมีประสิทธิภาพ
+A Flutter-based plant care management application that helps users monitor and track the growth of their plants efficiently.
 
-## Table of Contents 📚
+## Table of Contents
 
-1. [คุณสมบัติหลัก ✨](#คุณสมบัติหลัก-✨)
-2. [เทคโนโลยีที่ใช้ 🛠️](#เทคโนโลยีที่ใช้-🛠️)
-3. [การติดตั้ง 📥](#การติดตั้ง-📥)
-4. [วิธีการใช้งาน 📱](#วิธีการใช้งาน-📱)
-5. [โครงสร้างโปรเจค 📁](#โครงสร้างโปรเจค-📁)
-6. [ผู้พัฒนา 👨‍💻](#ผู้พัฒนา-👨‍💻)
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Demo Video](#demo-video)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the App](#running-the-app)
+- [Usage Guide](#usage-guide)
+- [Project Structure](#project-structure)
+- [Supported Plants](#supported-plants)
+- [Contributing](#contributing)
+- [License](#license)
+- [Developer](#developer)
 
-## คุณสมบัติหลัก ✨
+## Features
 
-- บันทึกและจัดการข้อมูลต้นไม้
-- ติดตามสถานะความชื้นในดิน อุณหภูมิ และความชื้นในอากาศ
-- รองรับต้นไม้หลากหลายประเภท (เดซี่, กุหลาบ, กล้วยไม้, กะเพรา, พลูด่าง และอื่นๆ)
-- ระบบแนะนำการดูแลต้นไม้
-- อินเตอร์เฟซที่ใช้งานง่ายพร้อมภาพประกอบ
-- รองรับทั้งภาษาไทยและภาษาอังกฤษ
+- **Plant Management**: Add, edit, and remove plants from your collection
+- **Real-time Monitoring**: Track soil moisture, temperature, and humidity levels
+- **Multiple Plant Types**: Support for various plant species including Daisy, Rose, Orchid, Holy Basil, and more
+- **Smart Care Recommendations**: Get personalized care tips based on plant type and sensor data
+- **User-friendly Interface**: Clean, intuitive design with visual indicators
+- **Multilingual Support**: Available in both Thai and English
+- **Data Persistence**: Local database storage using Sembast NoSQL
 
-## เทคโนโลยีที่ใช้ 🛠️
+## Screenshots
 
-- Flutter Framework
-- Sembast NoSQL Database
-- Provider State Management
-- Material Design
-- Google Fonts (Kanit)
+![GreenBuddy Interface](greenbuddy_app/assets/image.png)
 
-## การติดตั้ง 📥
+## Demo Video
 
-1. ติดตั้ง Flutter SDK:
-   - ดาวน์โหลด Flutter SDK จาก [flutter.dev](https://flutter.dev)
-   - แตกไฟล์และเพิ่ม path ในระบบ
-   - รันคำสั่ง `flutter doctor` เพื่อตรวจสอบการติดตั้ง
+Watch GreenBuddy in action:
 
-2. Clone repository:
+[![GreenBuddy Demo](https://img.youtube.com/vi/oHkVxUplFMk/0.jpg)](https://youtu.be/oHkVxUplFMk?si=WueRoZ4eajSMAW_0)
+
+[Watch on YouTube](https://youtu.be/oHkVxUplFMk?si=WueRoZ4eajSMAW_0)
+
+## Tech Stack
+
+- **Framework**: Flutter
+- **Database**: Sembast NoSQL
+- **State Management**: Provider
+- **UI Design**: Material Design
+- **Fonts**: Google Fonts (Kanit)
+
+## Getting Started
+
+### Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- Flutter SDK (3.0 or higher recommended)
+- Dart SDK
+- Android Studio / Xcode (for mobile development)
+- Git
+
+### Installation
+
+1. **Install Flutter SDK**
+
+   Download and install Flutter from [flutter.dev](https://flutter.dev/docs/get-started/install)
+
+   Verify installation:
+   ```bash
+   flutter doctor
    ```
+
+2. **Clone the repository**
+   ```bash
    git clone https://github.com/ParichatrSaipan/GreenBuddy.git
    cd GreenBuddy
    ```
 
-3. ติดตั้ง Dependencies:
-   ```
+3. **Install dependencies**
+   ```bash
    flutter pub get
    ```
 
-4. รันแอปพลิเคชัน:
-   ```
-   flutter run
-   ```
+### Running the App
 
-## วิธีการใช้งาน 📱
+Run the application on your preferred device/emulator:
 
-### การเริ่มต้นใช้งาน
-1. เปิดแอปพลิเคชัน GreenBuddy
-2. ที่หน้าแรกจะพบกับรายการต้นไม้ที่คุณมี (ถ้ามี)
-3. กดปุ่ม "+" เพื่อเพิ่มต้นไม้ใหม่
+```bash
+flutter run
+```
 
-### การเพิ่มต้นไม้
-1. เลือกประเภทต้นไม้จากรายการที่มีให้
-2. กรอกชื่อต้นไม้ของคุณ
-3. เลือกสีประจำต้นไม้ (ใช้ในการแยกแยะ)
-4. บันทึกข้อมูล
+For specific platforms:
+```bash
+# Android
+flutter run -d android
 
-### การดูแลต้นไม้
-1. กดที่ต้นไม้ที่ต้องการดูแล
-2. ตรวจสอบค่าต่างๆ:
-   - ความชื้นในดิน (0-100%)
-   - อุณหภูมิ
-   - ความชื้นในอากาศ
-3. ปฏิบัติตามคำแนะนำการดูแล
+# iOS
+flutter run -d ios
 
-### การลบต้นไม้
-1. เปิดโหมดแก้ไข (Edit Mode)
-2. เลือกต้นไม้ที่ต้องการลบ
-3. ยืนยันการลบ
+# Web
+flutter run -d chrome
+```
 
-### คำแนะนำเพิ่มเติม
-- ตรวจสอบความชื้นในดินอย่างสม่ำเสมอ
-- ปรับการรดน้ำตามค่าความชื้นที่แสดง
-- ศึกษาข้อมูลเพิ่มเติมในส่วน "คำแนะนำ" สำหรับแต่ละชนิดต้นไม้
+## Usage Guide
 
-## โครงสร้างโปรเจค 📁
+### Adding a New Plant
 
-- `lib/main.dart` - จุดเริ่มต้นของแอปพลิเคชัน
-- `lib/database/` - จัดการฐานข้อมูล
-- `lib/provider/` - จัดการ state ของแอปพลิเคชัน
-- `lib/screen/` - หน้าจอต่างๆ ของแอปพลิเคชัน
-- `lib/structure/` - โครงสร้างข้อมูลและ widgets ที่ใช้ร่วมกัน
-- `assets/` - รูปภาพและทรัพยากรต่างๆ
+1. Open GreenBuddy
+2. Tap the **"+"** button on the home screen
+3. Select your plant type from the available options
+4. Enter a custom name for your plant
+5. Choose a color identifier
+6. Save your plant
 
-## ผู้พัฒนา 👨‍💻
+### Monitoring Plant Health
 
-ParichatrSaipan
+1. Tap on any plant card from your collection
+2. View real-time sensor data:
+   - **Soil Moisture**: 0-100%
+   - **Temperature**: Current ambient temperature
+   - **Humidity**: Air humidity percentage
+3. Follow the care recommendations displayed
+
+### Managing Your Plants
+
+- **Edit Mode**: Toggle edit mode to select and manage multiple plants
+- **Delete Plants**: Select plants in edit mode and confirm deletion
+- **Update Information**: Tap on a plant to view and update its details
+
+### Best Practices
+
+- Check soil moisture regularly before watering
+- Adjust watering schedule based on sensor readings
+- Review plant-specific care tips in the recommendations section
+- Monitor temperature and humidity to ensure optimal growing conditions
+
+## Project Structure
+
+```
+GreenBuddy/
+├── lib/
+│   ├── main.dart              # Application entry point
+│   ├── database/              # Database management
+│   ├── provider/              # State management providers
+│   ├── screen/                # UI screens
+│   └── structure/             # Data models and shared widgets
+├── assets/                    # Images and resources
+├── pubspec.yaml               # Project dependencies
+└── README.md                  # This file
+```
+
+## Supported Plants
+
+GreenBuddy currently supports the following plant types:
+
+- Daisy
+- Rose
+- Orchid
+- Holy Basil (Thai Basil)
+- Anthurium
+- And more...
+
+Each plant type comes with specific care guidelines and optimal environmental parameters.
+
